@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="文件管理器">
+    <meta name="theme-color" content="#0066cc">
+    <title>文件管理器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📁 文件管理器</h1>
+            <div class="header-actions">
+                <input type="text" id="searchInput" placeholder="搜索文件..." class="search-box">
+                <button id="refreshBtn" class="btn btn-primary">刷新</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3>快速操作</h3>
+                    <button id="newFolderBtn" class="sidebar-btn">
+                        <span class="icon">📁</span> 新建文件夹
+                    </button>
+                    <button id="uploadBtn" class="sidebar-btn">
+                        <span class="icon">⬆️</span> 上传文件
+                    </button>
+                    <input type="file" id="fileInput" multiple style="display: none;">
+                </div>
+                <div class="sidebar-section">
+                    <h3>路径导航</h3>
+                    <div id="breadcrumb" class="breadcrumb"></div>
+                </div>
+            </aside>
+
+            <main class="content">
+                <div class="toolbar">
+                    <div class="toolbar-left">
+                        <label class="checkbox">
+                            <input type="checkbox" id="selectAllCheckbox">
+                            <span>全选</span>
+                        </label>
+                        <span id="selectedCount" class="selected-count"></span>
+                    </div>
+                    <div class="toolbar-right">
+                        <button id="deleteBtn" class="btn btn-danger" disabled>删除</button>
+                        <button id="copyBtn" class="btn btn-secondary" disabled>复制</button>
+                        <button id="moveBtn" class="btn btn-secondary" disabled>移动</button>
+                    </div>
+                </div>
+
+                <div class="file-list-container">
+                    <table class="file-list">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px;"></th>
+                                <th style="width: 40%;">名称</th>
+                                <th style="width: 15%;">大小</th>
+                                <th style="width: 20%;">修改时间</th>
+                                <th style="width: 15%;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fileListBody">
+                            <tr class="loading">
+                                <td colspan="5">加载中...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div id="newFolderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>新建文件夹</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="folderNameInput" placeholder="输入文件夹名称" class="input-field">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-cancel">取消</button>
+                <button class="btn btn-primary" id="confirmNewFolder">创建</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="previewModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="previewTitle">文件预览</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="previewBody"></div>
+        </div>
+    </div>
+
+    <div id="selectTargetModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="selectTargetTitle">选择目标文件夹</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="targetFolderList" class="folder-list"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-cancel">取消</button>
+                <button class="btn btn-primary" id="confirmTarget">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>处理中...</p>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
